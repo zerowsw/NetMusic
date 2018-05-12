@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<title>NetMusic</title>
+		<meta name="description" content="Free Bootstrap 4 Theme by ProBootstrap.com">
+		<meta name="keywords" content="free website templates, free bootstrap themes, free template, free bootstrap, free website template">
+    
+    
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,700" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/fonts/ionicons/css/ionicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/fonts/flaticon/font/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/fonts/fontawesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/select2.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/helpers.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+
+
+	</head>
+	<body>
+     <script src = "http://code.jquery.com/jquery-1.11.0.min.js"></script> 
+  
+    <nav class="navbar navbar-expand-lg navbar-dark probootstrap_navbar" id="probootstrap-navbar" style="background-color: black">
+      <div class="container">
+        <a class="navbar-brand" href="/">NetMusic</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#probootstrap-menu" aria-controls="probootstrap-menu" aria-expanded="false" aria-label="Toggle navigation">
+          <span><i class="ion-navicon"></i></span>
+        </button>
+        <div class="collapse navbar-collapse" id="probootstrap-menu">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/searchpage/">Search</a></li>
+              <li class="nav-item"><a class="nav-link" href="/recommendpage/">Recommandation</a></li>
+            <li class="nav-item"><a class="nav-link" href="/loginpage/">Log In</a></li>
+            <li class="nav-item"><a class="nav-link" href="/registerpage/">Register</a></li>
+            <li class="nav-item"><a class="nav-link" href="/userprofile/">User Profile</a></li>
+            <li class="nav-item"><a class="nav-link" href="/chat/">Chat</a></li>
+            <li class="nav-item"><a class="nav-link" href="/">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- END nav -->
+
+
+
+     <section class="probootstrap_section" id="">
+      <div class="container">
+        <div class="row text-center mb-5 probootstrap-animate">
+          <div class="col-md-12">
+            <h2 class="display-7 border-bottom probootstrap-section-heading" id="">Music Info</h2>
+          </div>
+{#        <div  class="clearfix" style="margin:auto; ">#}
+{#        <div class="inner">#}
+{#            <img style="resize: width:500px; height:500px;" src="https://i.annihil.us/u/prod/marvel/i/mg/6/50/521f70b81f7d3/portrait_incredible.jpg"  class="">#}
+{#        </div>#}
+{#        </div>#}
+
+          <div class="" style="margin:auto; ">
+                <div style="text-align: left" id=''><h3>{{title}}</h3></div>
+                <div style="text-align: left" id=''><h3>2012/4/25</h3></div>
+                <div style="text-align: left" id=''><h3>7.4</h3></div>
+                <div style="text-align: left" id=''>Popularity:<h3>89.89</h3></div>
+                <div style="text-align: left" id=''>Original language:<h3>English</h3></div>
+                <div style="text-align: left" id="star"></div>
+                <p id="1"></p>
+          </div>
+      </div>
+{#    </section>   #}
+  
+
+
+{#    <div class="probootstrap-text" id="movieinfo">#}
+{#        <h3 style="text-align: center" id='searchResult'>Title: The Avengers</h3>#}
+{#        <h3 style="text-align: center" id='searchResult'>Date:  2012/4/25</h3>#}
+{#        <h3 style="text-align: center" id='searchResult'>Vote:  7.4</h3>#}
+{#    </div>#}
+
+{#    <section class="probootstrap_section" id="">#}
+      <div class="container">
+        <div class="row text-center mb-5 probootstrap-animate">
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div style="margin:">
+            <a  id = "getComment" href="#1" role="button" class="btn btn-primary">Show All Comments</a>
+            </div>
+              <script type="text/javascript">
+
+                  $("#getComment").click(()=>{
+                      let data = {
+                          "title" : 'The Avengers'
+                          };
+                      let url = "http://127.0.0.1:8000/getmoviecomment/";
+                      $.get(url,data,(response)=>{
+                        $( ".abc" ).remove();
+                        console.log(response)
+                        if(response != 'no comments yet') {
+                            for (let i = 0; i < response.length; i++) {
+                                let commentUSer = response[i]['name'] + ': '
+                                let comment = response[i]['content']
+                                $("#content").append($("<div class='abc' style='position: relative;\n" +
+                                    "  width: 1000px;\n" +
+                                    "  height: auto;\n" +
+                                    "  margin: 20px 10px;\n" +
+                                    "  padding: 5px;\n" +
+                                    "  background-color: ;\n" +
+                                    "  border-radius: 5px;\n" +
+                                    "  border: 1px solid black;'>" + "<h5>" + commentUSer + "</h5>" + "<h6>" + comment + "</h6>" + "</div>"))
+                            }
+                        }
+                      });
+                   });
+              </script>
+          </div>
+            <div style="text-align: left" id="content"></div>
+        </div>
+      </div>
+
+
+{#     <section class="probootstrap_section" id="">#}
+      <div class="container">
+        <div class="row text-center mb-5 probootstrap-animate">
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="container">
+              <form>
+                <div class="form-group">
+                  <label for="comment">Write Comment:</label>
+                  <textarea class="form-control" rows="5" id="comment" placeholder="Your comment here..."></textarea>
+                </div>
+              </form>
+            </div>
+            <a id = "writeComment" href="#" role="button" class="btn btn-primary">Write Comment</a>
+
+              <script type="text/javascript">
+
+                  $("#writeComment").click(()=>{
+                      let data = {
+                          "name" : 'Hongting',
+                          "title" : 'Resident Evil: Afterlife',
+                          "content" : document.getElementById('comment').value,
+                          "timestamp" : Math.floor(Date.now() / 1000)};
+                      let url = "http://127.0.0.1:8000/makecomment/";
+                      $.get(url,data,(response)=>{
+                        alert(response)
+                        document.getElementById('comment').value = null
+                      });
+                   });
+              </script>
+          </div>
+        </div>
+      </div>
+{#    </section>#}
+
+
+    </section>
+
+
+
+
+
+
+
+    <!-- END section -->
+    <footer class="probootstrap_section probootstrap-border-top">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md-3">
+            <h3 class="probootstrap_font-18 mb-3"></h3>
+            <ul class="list-unstyled">
+              <li><a href="#" target="_blank"></a></li>
+              <li><a href="#" target="_blank"></a></li>
+              <li><a href="#" target="_blank"></a></li>
+              <li><a href="#" target="_blank"></a></li>
+            </ul>
+          </div>
+          <div class="col-md-3">
+            <h3 class="probootstrap_font-18 mb-3">Members</h3>
+            <ul class="list-unstyled">
+
+              <li><a href="#" target="_blank">Shaowen Wang</a></li>
+
+            </ul>
+          </div>
+          <div class="col-md-3">
+            <h3 class="probootstrap_font-18 mb-3">emails</h3>
+            <ul class="list-unstyled">
+
+              <li><a href="#" target="_blank">shaowen2@illinois.edu</a></li>
+
+            </ul>
+          </div>
+        </div>
+        <div class="row pt-5">
+          <div class="col-md-12 text-center">
+            <p class="probootstrap_font-14">&copy; 2018. All Rights Reserved.
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    
+    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/js/popper.min.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'assets/js/bootstrap-datepicker.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.easing.1.3.js' %}"></script>
+    <script src="{% static 'assets/js/select2.min.js' %}"></script>
+    <script src="{% static 'assets/js/main.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.raty.js' %}"></script>
+
+    <script type="text/javascript">
+
+        $('#star').raty({
+            path : "{% static 'assets/images' %}",
+            size : 35
+        });
+
+    </script>
+	</body>
+</html>

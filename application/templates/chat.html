@@ -1,0 +1,130 @@
+<!doctype html>
+{% load staticfiles %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Netfilm</title>
+    <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/chat.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript">//<![CDATA[
+    $(function () {
+
+            if(window.websocket){
+                window.websocket.close()
+            }
+            var websocket = new WebSocket("ws://" + window.location.host + "/echo");
+            websocket.onopen = function () {
+                console.log('WebSocket open');
+            };
+            websocket.onmessage = function (responseData) {
+                console.log('message: ' + responseData.data);
+                var jsondata = eval('(' + responseData.data + ')');
+                //$('#show_message').append('<p>' + jsondata.name + '</p>');
+
+                var ele = $('<tr></tr>')
+
+                ele.append(
+                    $("<td></td>").text(new Date().toLocaleTimeString())
+                )
+
+                ele.append(
+                    $("<td></td>").text('     Hongting')
+                )
+
+
+                $('#show_message').append(ele)
+
+                var ele2 = $('<tr></tr>')
+
+                ele2.append(
+                    $("<td></td>").text(jsondata.name)
+                )
+
+                $('#show_message').append(ele2)
+
+            };
+            window.websocket = websocket;
+
+
+        //send message
+        $('#send_message').click(function () {
+            if(!window.websocket){
+                alert("Please connect server.");
+            }else{
+                window.websocket.send(JSON.stringify({"name":$('#message').val()}));
+            }
+
+            $('#message').val("");
+        });
+    });
+    //]]></script>
+
+
+</head>
+<body id="chat">
+    <nav class="navbar navbar-expand-lg navbar-dark probootstrap_navbar" id="probootstrap-navbar" style="background-color: black">
+      <div class="container">
+
+        <a class="navbar-brand" href="/">{{username}}</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#probootstrap-menu" aria-controls="probootstrap-menu" aria-expanded="false" aria-label="Toggle navigation">
+          <span><i class="ion-navicon"></i></span>
+        </button>
+        <div class="collapse navbar-collapse" id="probootstrap-menu">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="/searchpage/">Search</a></li>
+            <li class="nav-item"><a class="nav-link" href="/loginpage/">Log In</a></li>
+            <li class="nav-item"><a class="nav-link" href="/registerpage/">Register</a></li>
+            <li class="nav-item"><a class="nav-link" href="/userprofile/">User Profile</a></li>
+            <li class="nav-item"><a class="nav-link" href="/">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="tile">
+        <div class="tile is-4 is-vertical">
+            <div class="box">
+                <div class="level-item">
+                    <div class="field has-addons">
+                        <p class="control">
+                            <input class="input" type="text" placeholder="search a friend">
+                        </p>
+                        <p class="control">
+                            <button class="button">Search</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tile is-vertical">
+            <div class="tile">
+                <table id="show_message" class="box">
+                    <tbody>
+                        {% for message in messages %}
+                          <tr>
+                            <td>{{ message.timeinfo }}</td>
+                            <td>{{ message.message }}</td>
+                          </tr>
+                        {% endfor %}
+                     </tbody>
+                </table>
+            </div>
+            <div class="tile">
+                <div id="input_message" class="box">
+                    <div class="field has-addons">
+                        <div id="input_message" class="control">
+                            <input id="message" class="input is-hovered" type="text" placeholder="massage input">
+                        </div>
+                        <div class="control">
+                            <button id="send_message" class="button is-dark has-text-white">Send</button>
+                        </div>
+                    </div>   
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
